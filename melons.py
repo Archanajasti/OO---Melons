@@ -77,8 +77,8 @@ class AbstractMelonOrder():
 
     def get_base_price(self):
         base_price = random.randint(5, 9)
-        if datetime.date(self.date).weekday() == 0 or 1 or 2 or 3 or 4:
-            if datetime.hour(self.hour2) is 8 or 9 or 10 or 11:
+        if datetime.date(self.date2).weekday() == 0 or 1 or 2 or 3 or 4:
+            if datetime.hour(self.hour2) is :
                 base_price += 4*self.qty
         return base_price
 
