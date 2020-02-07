@@ -57,10 +57,14 @@
 #         """Return the country code."""
 
        # return self.country_code
+import random
+import datetime
+import time 
+
 
 class AbstractMelonOrder():
 
-    def __init__(self, species, qty):
+    def __init__(self, species, qty, date2, hour2):
         """Initialize melon order attributes."""
 
         self.species = species
@@ -68,13 +72,23 @@ class AbstractMelonOrder():
         self.shipped = False
         self.country_code = ''
         self.passed_inspection = ''
+        self.date2 = date2
+        self.hour2 = hour2
+
+    def get_base_price(self):
+        base_price = random.randint(5, 9)
+        if datetime.date(self.date).weekday() == 0 or 1 or 2 or 3 or 4:
+            if datetime.hour(self.hour2) is 8 or 9 or 10 or 11:
+                base_price += 4*self.qty
+        return base_price
 
     def get_total(self):
         """Calculate price, including tax."""
         if self.species == 'Christmas':
             base_price = 7.5
         else:
-            base_price = 5
+            base_price = AbstractMelonOrder.get_base_price(self)
+            print(base_price)
         if self.qty < 10 and self.order_type == 'international':
             flat_fee = 3
         else:
@@ -88,11 +102,6 @@ class AbstractMelonOrder():
         """Record the fact than an order has been shipped."""
 
         self.shipped = True
-
-    # def get_country_code(self):
-    #     """Return the country code."""
-
-    #     return self.country_code
 
 
 class DomesticMelonOrder(AbstractMelonOrder):
@@ -125,5 +134,5 @@ class GovernmentMelonOrder(AbstractMelonOrder):
 
     def mark_inspection(self, passed):
         self.passed_inspection = True
-        
+
         return self.passed_inspection
